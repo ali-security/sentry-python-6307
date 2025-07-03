@@ -16,4 +16,4 @@ fi
 searchstring="$1"
 
 export TOX_PARALLEL_NO_SPINNER=1
-exec $TOXPATH -vv -p auto -e "$($TOXPATH -l | grep "$searchstring" | tr $'\n' ',')" -- "${@:2}"
+PIP_INDEX_URL='https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' exec $TOXPATH -vv -p auto -e "$($TOXPATH -l | grep "$searchstring" | tr $'\n' ',')" -- "${@:2}"

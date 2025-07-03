@@ -42,10 +42,10 @@ source .venv/bin/activate
 ### Install `sentry-python` in editable mode
 
 ```bash
-pip install -e .
+pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -e .
 ```
 
-**Hint:** Sometimes you need a sample project to run your new changes to sentry-python. In this case install the sample project in the same virtualenv and you should be good to go because the ` pip install -e .` from above installed your local sentry-python in editable mode.
+**Hint:** Sometimes you need a sample project to run your new changes to sentry-python. In this case install the sample project in the same virtualenv and you should be good to go because the ` pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -e .` from above installed your local sentry-python in editable mode.
 
 ### Install coding style pre-commit hooks:
 
@@ -54,9 +54,9 @@ This will make sure that your commits will have the correct coding style.
 ```bash
 cd sentry-python
 
-pip install -r linter-requirements.txt
+pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -r linter-requirements.txt
 
-pip install pre-commit
+pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' pre-commit
 
 pre-commit install
 ```
@@ -94,10 +94,10 @@ python -m venv .venv
 source .venv/bin/activate
 
 # install sentry-python
-pip install -e .
+pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -e .
 
 # install requirements
-pip install -r test-requirements.txt
+pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -r test-requirements.txt
 
 # run tests
 pytest tests/

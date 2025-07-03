@@ -19,27 +19,27 @@ env:
 jobs:
   lint:
     name: Lint Sources
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: MatteoH2O1999/setup-python@v4
         with:
           python-version: 3.9
 
       - run: |
-          pip install tox
-          tox -e linters
+          pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' tox
+          PIP_INDEX_URL='https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' tox -e linters
 
   check-ci-config:
     name: Check CI config
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: MatteoH2O1999/setup-python@v4
         with:
           python-version: 3.9
 
@@ -48,12 +48,12 @@ jobs:
 
   build_lambda_layer:
     name: Build Package
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: MatteoH2O1999/setup-python@v4
         with:
           python-version: 3.9
       - name: Setup build cache
@@ -65,7 +65,7 @@ jobs:
       - name: Build Packages
         run: |
           echo "Creating directory containing Python SDK Lambda Layer"
-          pip install virtualenv
+          pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' virtualenv
           # This will also trigger "make dist" that creates the Python packages
           make aws-lambda-layer
 
@@ -73,37 +73,37 @@ jobs:
           export SDK_VERSION=$(grep "VERSION = " sentry_sdk/consts.py | cut -f3 -d' ' | tr -d '"')
           echo "SDK_VERSION=$SDK_VERSION"
           echo "SDK_VERSION=$SDK_VERSION" >> $GITHUB_ENV
-      - name: Upload Python AWS Lambda Layer
-        uses: getsentry/action-build-aws-lambda-extension@v1
-        with:
-          artifact_name: ${{ github.sha }}
-          zip_file_name: sentry-python-serverless-${{ env.SDK_VERSION }}.zip
-          build_cache_paths: ${{ env.CACHED_BUILD_PATHS }}
-          build_cache_key: ${{ env.BUILD_CACHE_KEY }}
+      # - name: Upload Python AWS Lambda Layer
+      #   uses: getsentry/action-build-aws-lambda-extension@v1
+      #   with:
+      #     artifact_name: ${{ github.sha }}
+      #     zip_file_name: sentry-python-serverless-${{ env.SDK_VERSION }}.zip
+      #     build_cache_paths: ${{ env.CACHED_BUILD_PATHS }}
+      #     build_cache_key: ${{ env.BUILD_CACHE_KEY }}
       - name: Upload Python Packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.sha }}
+          name: python-packages-${{ github.sha }}
           path: |
             dist/*
 
   docs:
     name: Build SDK API Doc
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: MatteoH2O1999/setup-python@v4
         with:
           python-version: 3.9
 
       - run: |
-          pip install virtualenv
+          pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' virtualenv
           make apidocs
           cd docs/_build && zip -r gh-pages ./
 
-      - uses: actions/upload-artifact@v3.1.1
+      - uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.sha }}
+          name: docs-${{ github.sha }}
           path: docs/_build/gh-pages.zip

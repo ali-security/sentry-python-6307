@@ -118,7 +118,7 @@ def run_cloud_function():
             )
 
             subprocess.check_call(
-                "pip install ../*.tar.gz -t .",
+                "pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' ../*.tar.gz -t .",
                 cwd=tmpdir,
                 shell=True,
                 **subprocess_kwargs

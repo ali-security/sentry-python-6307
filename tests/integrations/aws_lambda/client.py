@@ -108,7 +108,7 @@ def run_lambda_function(
             )
 
             subprocess.check_call(
-                "pip install mock==3.0.0 funcsigs -t .",
+                "pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' mock==3.0.0 funcsigs -t .",
                 cwd=tmpdir,
                 shell=True,
                 **subprocess_kwargs
@@ -116,7 +116,7 @@ def run_lambda_function(
 
             # https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html
             subprocess.check_call(
-                "pip install ../*.tar.gz -t .",
+                "pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' ../*.tar.gz -t .",
                 cwd=tmpdir,
                 shell=True,
                 **subprocess_kwargs

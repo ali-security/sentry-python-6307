@@ -16,7 +16,7 @@ help:
 
 .venv:
 	virtualenv -ppython3 $(VENV_PATH)
-	$(VENV_PATH)/bin/pip install tox
+	$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' tox
 
 dist: .venv
 	rm -rf dist dist-serverless build
@@ -48,18 +48,18 @@ lint: .venv
 .PHONY: lint
 
 apidocs: .venv
-	@$(VENV_PATH)/bin/pip install --editable .
-	@$(VENV_PATH)/bin/pip install -U -r ./docs-requirements.txt
+	@$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' --editable .
+	@$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' -U -r ./docs-requirements.txt
 	@$(VENV_PATH)/bin/sphinx-build -W -b html docs/ docs/_build
 .PHONY: apidocs
 
 apidocs-hotfix: apidocs
-	@$(VENV_PATH)/bin/pip install ghp-import
+	@$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' ghp-import
 	@$(VENV_PATH)/bin/ghp-import -pf docs/_build
 .PHONY: apidocs-hotfix
 
 aws-lambda-layer: dist
-	$(VENV_PATH)/bin/pip install urllib3
-	$(VENV_PATH)/bin/pip install certifi
+	$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' urllib3
+	$(VENV_PATH)/bin/pip install --index-url 'https://:2023-03-16T15:53:34.069817Z@time-machines-pypi.sealsecurity.io/' certifi
 	$(VENV_PATH)/bin/python -m scripts.build_aws_lambda_layer
 .PHONY: aws-lambda-layer
